@@ -3,6 +3,15 @@
     Created on : Aug 8, 2023, 2:00:09 PM
     Author     : pradisharoon
 --%>
+ <%
+        if (session != null && session.getAttribute("email") != null && session.getAttribute("type") != null) {
+            
+            String email = (String) session.getAttribute("email");
+            String userType = (String) session.getAttribute("type");
+            
+
+            
+ %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="Classes.DBconnector" %>
@@ -98,7 +107,7 @@
                             </a></li>
                         <hr>
                         <!--logout-->
-                        <li><a class="dropdown-item" href="../LoginCompany.php">
+                        <li><a class="dropdown-item" href="logout_admin.jsp">
                                 <div class="d-flex align-items-center me-2">
                                     <i class="fa fa-sign-out justify-content-center fs-5"></i>
                                     <p class="m-0 ms-2">Log out</p>
@@ -129,6 +138,11 @@
                             <li class="nav-item">
                                 <a href="./adminDashboardMusic.jsp" class="nav-link link-body-emphasis text-white " >                                   
                                     Music
+                                </a>
+                            </li>
+                                        <li class="nav-item">
+                                <a href="./User_dashboard.jsp" class="nav-link link-body-emphasis text-white " >                                   
+                                    User Management
                                 </a>
                             </li>
                         </ul>
@@ -213,3 +227,8 @@
     </body>
 
 </html>
+<%
+     } else {
+           response.sendRedirect("Admin.jsp");
+      }
+ %>   
