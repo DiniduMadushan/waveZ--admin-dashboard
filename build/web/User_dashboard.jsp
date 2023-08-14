@@ -66,12 +66,7 @@
                     </a>
                     <hr class="sidebar-divider my-0" />
                     <ul class="navbar-nav text-light" id="accordionSidebar">
-                        <li class="nav-item">
-                            <a id="anchor1" class="nav-link" href="User_dashboard.jsp">
-                                <i class="fas fa-tachometer-alt"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a id="anchor2" class="nav-link active" href="User_dashboard.jsp">
                                 <i class="fas fa-user"></i>
@@ -96,7 +91,7 @@
             </nav>
             <div class="d-flex flex-column" id="content-wrapper">
                 <div id="content">
-                    <nav class="navbar navbar-light navbar-expand-md bg-info shadow mb-4 py-3 static-top">
+                    <nav class="navbar navbar-light navbar-expand-md bg-black shadow mb-4 py-3 static-top">
                         <div class="container-fluid">
                             <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button">
                                 <i class="fas fa-bars"></i>
@@ -200,7 +195,7 @@
 
                 </div>
                                                             <hr>
-                <footer class="bg-info sticky-footer">
+                <footer class="bg-black sticky-footer">
 
                     <div class="container my-auto">
                         <div class="text-center my-auto copyright">

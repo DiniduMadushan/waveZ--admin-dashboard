@@ -84,12 +84,11 @@ public class Admin_user {
     }
 
     public boolean updateAdmin(Connection con) throws SQLException {
-        String query = "UPDATE admin SET name=?,email=?,password=? WHERE admin_ID=?";
+        String query = "UPDATE admin SET name=?,password=? WHERE admin_ID=?";
         PreparedStatement pstmt = con.prepareStatement(query);
         pstmt.setString(1, name);
-        pstmt.setString(2, email);
-        pstmt.setString(3, password);
-        pstmt.setInt(4, admin_ID);
+        pstmt.setString(2, password);
+        pstmt.setInt(3, admin_ID);
         int x = pstmt.executeUpdate();
         return (x > 0);
     }
