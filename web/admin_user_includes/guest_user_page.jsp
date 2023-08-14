@@ -1,6 +1,20 @@
+ <%
+        if (session != null && session.getAttribute("email") != null && session.getAttribute("type") != null) {
+            
+            String email = (String) session.getAttribute("email");
+            String userType = (String) session.getAttribute("type");
+            
+
+            
+ %>
 <%@page import="java.sql.*" %>
 <%@page import="Classes.DBconnector" %>
 <%@page import="Classes.Admin_user" %>
+<%@page import="Classes.Admin" %>
+
+<%
+   Admin admin=Admin.getAdmin(email,DBconnector.getCon()); 
+ %>
 
 <%
     int guest_users = Admin_user.getUserCount(DBconnector.getCon());
@@ -66,7 +80,7 @@
                             </a>
                         </li>
                     </ul>
-                    <a class="btn btn-primary btn-md" role="button" data-bss-hover-animate="pulse" href="">Log Out</a>
+                    <a class="btn btn-primary btn-md" role="button" data-bss-hover-animate="pulse" href="../logout_admin.jsp">Log Out</a>
                     <hr class="sidebar-divider my-2" />
                     <div class="text-center d-none d-md-inline">
                         <button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button>
@@ -75,13 +89,13 @@
             </nav>
             <div class="d-flex flex-column" id="content-wrapper">
                 <div id="content">
-                    <nav class="navbar navbar-light navbar-expand-md bg-info shadow mb-4 py-3 static-top">
+                    <nav class="navbar navbar-light navbar-expand-md bg-black shadow mb-4 py-3 static-top">
                         <div class="container-fluid">
                             <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button">
                                 <i class="fas fa-bars"></i>
                             </button>
                             <h4 class="d-none d-md-block" style="color:white">WAVEZ- USER MANAGEMENT</h4>
-                            <h4 class="align-self-right text-white">Hello Username&nbsp;&nbsp;<i class="fa-solid fa-user-tie fa-xl"></i></h4>
+                            <h4 class="align-self-right text-white">Hello <%=admin.getName()%>&nbsp;&nbsp;<i class="fa-solid fa-user-tie fa-xl"></i></h4>
                         </div>
                     </nav>
 
@@ -282,7 +296,7 @@
                 </script>                   
                 <hr>                        
 
-                <footer class="bg-info sticky-footer">
+                <footer class="bg-black sticky-footer">
 
                     <div class="container my-auto">
                         <div class="text-center my-auto copyright">
@@ -299,3 +313,8 @@
         </div>
     </body>
 </html>
+<%
+     } else {
+           response.sendRedirect("Admin.jsp");
+      }
+ %>  

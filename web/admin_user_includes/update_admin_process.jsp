@@ -20,15 +20,12 @@
     Admin_user admin=new Admin_user(admin_ID,name, email, password);
     
     if(My_functions.passwordCheck(password, con_password)){
-        if(admin.notValid(DBconnector.getCon())){
-            response.sendRedirect("admin_update.jsp?status=0&&admin_ID="+admin_ID);
-        }else{
-            if(admin.updateAdmin(DBconnector.getCon())){
+        if(admin.updateAdmin(DBconnector.getCon())){
                 response.sendRedirect("admin_user_page.jsp?status=4");
             }else{
                 response.sendRedirect("admin_update.jsp?status=2&&admin_ID="+admin_ID);
             }
-        }
+        
     }else{
         response.sendRedirect("admin_update.jsp?status=1&&admin_ID="+admin_ID);
     }
