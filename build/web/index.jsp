@@ -2,6 +2,11 @@
 <%@page import="java.sql.*" %>
 <%@page import="Classes.DBconnector" %>
 <%@page import="Classes.User" %>
+<%@ page import="Classes.Artist" %>
+<%@ page import="Classes.Album" %>
+<%@ page import="Classes.Track" %>
+<%@ page import=" java.util.ArrayList"%>
+<%@ page import=" java.util.List"%>
 
 <%  
         String name="";
@@ -23,7 +28,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+           <!-- favicon -->
+        <link rel="shortcut icon" href="Images/logoOnly.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">-->
+   
     <link rel="stylesheet" href="CSS/main.css">
     <title>Music App</title>
 </head>
@@ -31,67 +40,35 @@
 <body>
 <header>
     <div class="menu_side">
-        <h1>WaveZ</h1>
+        <h1><img src="Images/logoWhite.png" alt="Music Streaming App Logo" style="height: 38px; "></h1>
         <div class="playlist">
             <h4 class="active"><span></span><i class="bi bi-music-note-beamed"></i> Playlist</h4>
             <h4 ><span></span><i class="bi bi-music-note-beamed"></i> Last Listening</h4>
             <h4 ><span></span><i class="bi bi-music-note-beamed"></i> Recommended</h4>
         </div>
         <div class="menu_song">
+                                                      <% 
+                            List<Track> tracks = Track.displayTracks(DBconnector.getCon());
+                            for(Track track : tracks){
+                        %>
             <li class="songItem">
-                <span>01</span>
-                <img src="image/use-img/1.jpg" alt="Alan">
+                <span><%= track.getTrack_ID() %></span>
+                <img src="<%= "upload/music/"+track.getPhoto() %>" alt="<%= track.getTitle() %>">
                 <h5>
-                    On My Way
-                    <div class="subtitle">Alan Walker</div>
+                    <%= track.getTitle() %>
+                    <div class="subtitle">   <%  Artist artistT = Artist.getArtist(track.getArtist_ID(), DBconnector.getCon()); %>
+                                <%=artistT.getName()%></div>
+                    <div class="subtitle"><%  Album albumT = Album.getAlbum(track.getAlbum_ID(), DBconnector.getCon()); %>
+                                <%=albumT.getAlbum_title()%></div>
                 </h5>
-                    <i class="bi playListPlay bi-play-circle-fill" id="1"></i>
+                              <audio id="musicPlayer" controls style="width: 50%;">
+                                            <source id="audio" src=" <%= "upload/audio/"+track.getFile() %>" type="">
+                                        </audio>
             </li>
-            <li class="songItem">
-                <span>02</span>
-                <img src="image/use-img/1.jpg" alt="Alan">
-                <h5>
-                    On My Way
-                    <div class="subtitle">Alan Walker</div>
-                </h5>
-                    <i class="bi playListPlay bi-play-circle-fill" id="2"></i>
-            </li>
-            <li class="songItem">
-                <span>03</span>
-                <img src="image/use-img/1.jpg" alt="Alan">
-                <h5>
-                    On My Way
-                    <div class="subtitle">Alan Walker</div>
-                </h5>
-                    <i class="bi playListPlay bi-play-circle-fill" id="3"></i>
-            </li>
-            <li class="songItem">
-                <span>04</span>
-                <img src="image/use-img/1.jpg" alt="Alan">
-                <h5>
-                    On My Way
-                    <div class="subtitle">Alan Walker</div>
-                </h5>
-                    <i class="bi playListPlay bi-play-circle-fill" id="4"></i>
-            </li>
-            <li class="songItem">
-                <span>05</span>
-                <img src="image/use-img/1.jpg" alt="Alan">
-                <h5>
-                    On My Way
-                    <div class="subtitle">Alan Walker</div>
-                </h5>
-                    <i class="bi playListPlay bi-play-circle-fill" id="5"></i>
-            </li>
-            <li class="songItem">
-                <span>06</span>
-                <img src="image/use-img/1.jpg" alt="Alan">
-                <h5>
-                    On My Way
-                    <div class="subtitle">Alan Walker</div>
-                </h5>
-                    <i class="bi playListPlay bi-play-circle-fill" id="6"></i>
-            </li>
+                          <%
+                            }
+                        %>
+           
         </div>
     </div>
 
@@ -108,7 +85,7 @@
                 <input type="text" placeholder="Search Music...">
             </div>
             <div class="user">
-                <img src="image/use-img/nipa.jpg" alt="User" title="<%=name%>">
+                <p class="me-4"><%=name%></p>
             </div>
         </nav>
         <div class="content">
@@ -125,106 +102,33 @@
         </div>
         <div class="popular_song">
             <div class="h4">
-                <h4>Popular Song</h4>
+                <h4>Popular Albums</h4>
                 <div class="btn_s">
                     <i id="left_scroll" class="bi bi-arrow-left-short"></i>
                     <i id="right_scroll" class="bi bi-arrow-right-short"></i>
                 </div>
             </div>
             <div class="pop_song">
+                       <% 
+                            List<Album> albums = Album.displayAlbums(DBconnector.getCon());
+                            for(Album album : albums){
+                        %>
                 <li class="songItem">
                     <div class="img_play">
-                        <img src="image/use-img/1.jpg" alt="alan">
+                        <img src="<%= "upload/album/"+album.getAlbumPhoto() %>" alt="<%= album.getAlbum_title() %>">
                         <i class="bi playListPlay bi-play-circle-fill" id="7"></i>
                     </div>
-                    <h5>On My Way
+                    <h5><%= album.getAlbum_title() %>
                         <br>
-                        <div class="subtitle">Alan Walker</div>
+                        <div class="subtitle"><%= album.getYear() %></div>
                     </h5>
                 </li>
-                <li class="songItem">
-                    <div class="img_play">
-                        <img src="image/use-img/1.jpg" alt="alan">
-                        <i class="bi playListPlay bi-play-circle-fill" id="8"></i>
-                        <!-- change All id  -->
-                    </div>
-                    <h5>On My Way
-                        <br>
-                        <div class="subtitle">Alan Walker</div>
-                    </h5>
-                </li>
-                <li class="songItem">
-                    <div class="img_play">
-                        <img src="image/use-img/1.jpg" alt="alan">
-                        <i class="bi playListPlay bi-play-circle-fill" id="9"></i>
-                    </div>
-                    <h5>On My Way
-                        <br>
-                        <div class="subtitle">Alan Walker</div>
-                    </h5>
-                </li>
-                <li class="songItem">
-                    <div class="img_play">
-                        <img src="image/use-img/1.jpg" alt="alan">
-                        <i class="bi playListPlay bi-play-circle-fill" id="10"></i>
-                    </div>
-                    <h5>On My Way
-                        <br>
-                        <div class="subtitle">Alan Walker</div>
-                    </h5>
-                </li>
-                <li class="songItem">
-                    <div class="img_play">
-                        <img src="image/use-img/1.jpg" alt="alan">
-                        <i class="bi playListPlay bi-play-circle-fill" id="11"></i>
-                    </div>
-                    <h5>On My Way
-                        <br>
-                        <div class="subtitle">Alan Walker</div>
-                    </h5>
-                </li>
-                <li class="songItem">
-                    <div class="img_play">
-                        <img src="image/use-img/1.jpg" alt="alan">
-                        <i class="bi playListPlay bi-play-circle-fill" id="12"></i>
-                    </div>
-                    <h5>On My Way
-                        <br>
-                        <div class="subtitle">Alan Walker</div>
-                    </h5>
-                </li>
-                <li class="songItem">
-                    <div class="img_play">
-                        <img src="image/use-img/1.jpg" alt="alan">
-                        <i class="bi playListPlay bi-play-circle-fill" id="13"></i>
-                    </div>
-                    <h5>On My Way
-                        <br>
-                        <div class="subtitle">Alan Walker</div>
-                    </h5>
-                </li>
-                <li class="songItem">
-                    <div class="img_play">
-                        <img src="image/use-img/1.jpg" alt="alan">
-                        <i class="bi playListPlay bi-play-circle-fill" id="14"></i>
-                    </div>
-                    <h5>On My Way
-                        <br>
-                        <div class="subtitle">Alan Walker</div>
-                    </h5>
-                </li>
-                <li class="songItem">
-                    <div class="img_play">
-                        <img src="image/use-img/1.jpg" alt="alan">
-                        <i class="bi playListPlay bi-play-circle-fill" id="15"></i>
-                    </div>
-                    <h5>On My Way
-                        <br>
-                        <div class="subtitle">Alan Walker</div>
-                    </h5>
-                </li>
+                <%
+                    }
+                    %>
             </div>
         </div>
+            
         <div class="popular_artists">
             <div class="h4">
                 <h4>Popular Artists</h4>
@@ -234,39 +138,16 @@
                 </div>
             </div>
             <div class="item">
+                        <% 
+                            List<Artist> artists = Artist.displayArtist(DBconnector.getCon());
+                            for(Artist artist : artists){
+                        %>
                 <li>
-                    <img src="image/use-img/arjit.jpg" alt="Arjit Singh" title="Arjit Singh">
+                    <img src="<%= "upload/artist/"+artist.getPhoto() %>" alt="<%= artist.getName() %>" title="Arjit Singh">
                 </li>
-                <li>
-                    <img src="image/use-img/alan.jpg" alt="Alan Walker" title="Alan Walker">
-                </li>
-                <li>
-                    <img src="image/use-img/atif.jpg" alt="Atif Aslam" title="Atif Aslam">
-                </li>
-                <li>
-                    <img src="image/use-img/guru.jpg" alt="Guru RAndawa" title="Guru Randawa">
-                </li>
-                <li>
-                    <img src="image/use-img/dhvani.jpg" alt="Dhvani" title="Dhvani">
-                </li>
-                <li>
-                    <img src="image/use-img/Diljit_Dosanjh.jpg" alt="Diljit Dosanjh" title="Diljit Dosanjh">
-                </li>
-                <li>
-                    <img src="image/use-img/jubin Nautiyal.jpg" alt="Jubin Nautiyal" title="Jubin Nautiyal">
-                </li>
-                <li>
-                    <img src="image/use-img/neha.jpg" alt="Neha Kakker" title="Neha Kakker">
-                </li>
-                <li>
-                    <img src="image/use-img/justin-bieber-lede.jpg" alt="Justin Bieber" title="Justin Bieber">
-                </li>
-                <li>
-                    <img src="image/use-img/honey.jpg" alt="Honey Singh" title="Honey Singh">
-                </li>
-                <li>
-                    <img src="image/use-img/akhil.jpg" alt="Akhil" title="Akhil">
-                </li>
+                <%
+                    }
+                    %>
                 <!-- change all img  -->
             </div>
         </div>
@@ -279,9 +160,9 @@
             <div class="wave1"></div>
             <div class="wave1"></div>
         </div>
-        <img src="image/use-img/26th.jpg" alt="Alan" id="poster_master_play">
-        <h5 id="title">Vande Mataram<br>
-            <div class="subtitle">Bankim Chandra</div>
+        <img src="Images/logoOnly.png" alt="logo" id="poster_master_play">
+        <h5 id="title">Music<br>
+            <div class="subtitle">Wavez</div>
         </h5>
         <div class="icon">
             <i class="bi bi-skip-start-fill" id="back"></i>
@@ -304,7 +185,10 @@
         </div>
     </div>
 </header>
-    <script src="assets/js/main.js"></script>
+                    <!--bootstrap-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+
+    <script src="assets/js/main1.js"></script>
 </body>
 
 </html>
